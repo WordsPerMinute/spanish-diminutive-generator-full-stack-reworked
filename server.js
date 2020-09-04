@@ -16,8 +16,6 @@ app.use(function(req, res, next) {
 // the SerpAPI version
 app.get('/images', async (req, res) => {
 
-  console.log('env:', process.env.API_KEY)
-
   const word = req.query.word
 
   let searchData = await axios.get(`https://serpapi.com/search?engine=google&q=${word}&tbm=isch&ijn=0&api_key=${process.env.API_KEY}`)
@@ -29,7 +27,6 @@ app.get('/images', async (req, res) => {
     console.log(error);
   })
 
-  console.log(searchData)
   res.json(searchData)
 })
 
@@ -71,6 +68,13 @@ app.get('/images', async (req, res) => {
 //   // })
 
 // })
+
+// app.get('/', (req, res) => {
+//   console.log('hi')
+//   app.use(express.static('front-end-react/build'));
+//   const path = require('path');
+//   res.sendFile(path.resolve(__dirname, 'front-end-react', 'build', 'index.html'));
+// });
 
 // required for proper deployment to Heroku, along with adding the heroku-postbuild that goes into client, runs npm install and npm build, and adding config keys in Heroku project settings
 if (process.env.NODE_ENV) {
