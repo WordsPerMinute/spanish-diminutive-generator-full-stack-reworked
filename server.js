@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 5000
 const path = require('path'); 
 const axios = require('axios');
 
@@ -13,12 +13,32 @@ app.use(function(req, res, next) {
   next();
 });
 
+const sanitizeSearch = (unsanitizedWord) => {
+
+  // We are removing all accented characters or "diacritics", because they break axios' get request to the api
+  let sanitizedWord = unsanitizedWord
+    .replace(/[é]/g,"%C3%A9")
+    .replace(/[í]/g,"%C3%AD")
+    .replace(/[á]/g,"%C3%A1")
+    .replace(/[ó]/g,"%C3%B3")
+    .replace(/[ú]/g,"%C3%BA")
+
+  return sanitizedWord
+}
+
 // the SerpAPI version
 app.get('/images', async (req, res) => {
 
-  const word = req.query.word
+  let word = req.query.word
+  word = sanitizeSearch(word)
 
-  let searchData = await axios.get(`https://serpapi.com/search?engine=google&q=${word}&tbm=isch&ijn=0&api_key=${process.env.API_KEY}`)
+  const config = {
+    method: 'get',
+    url: `https://serpapi.com/search?engine=google&q=${word}&tbm=isch&ijn=0&api_key=${process.env.API_KEY}`,
+    encoding: 'utf-8'
+  }
+
+  let searchData = await axios(config)
   .then(function (res) {
     return res.data
   })
