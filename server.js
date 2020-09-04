@@ -80,7 +80,7 @@ app.get('/images', async (req, res) => {
 if (process.env.NODE_ENV) {
   app.use(express.static('front-end-react/build'));
   const path = require('path');
-  app.get('/', (req, res) => {
+  app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'front-end-react', 'build', 'index.html'));
   });
 }
