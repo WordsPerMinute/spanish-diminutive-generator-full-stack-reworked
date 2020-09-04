@@ -4,8 +4,8 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "heroku-postbuild": "cd front-end-react && npm install && npm run build",
+    "start": "node server.js",
+    "heroku-postbuild": "npm install && cd front-end-react && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
