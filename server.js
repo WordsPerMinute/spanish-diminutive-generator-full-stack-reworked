@@ -74,10 +74,10 @@ app.get('/images', async (req, res) => {
 
 // required for proper deployment to Heroku, along with adding the heroku-postbuild that goes into client, runs npm install and npm build, and adding config keys in Heroku project settings
 if (process.env.NODE_ENV) {
-  app.use(express.static('client/build'));
+  app.use(express.static('front-end-react/build'));
   const path = require('path');
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'front-end-react', 'build', 'index.html'));
   });
 }
 
