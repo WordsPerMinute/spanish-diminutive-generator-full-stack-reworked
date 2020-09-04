@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
