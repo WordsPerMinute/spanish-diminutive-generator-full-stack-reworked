@@ -8,7 +8,7 @@
   "description": "",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "git submodule update --init --recursive && cd front-end-react && npm install && npm run build",
+    "heroku-postbuild": "rm -rf front-end-react && git clone https://github.com/WordsPerMinute/spanish-diminutive-generator.git front-end-react && cd front-end-react && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
