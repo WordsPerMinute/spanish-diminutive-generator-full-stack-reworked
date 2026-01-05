@@ -28,26 +28,25 @@ const sanitizeSearch = (unsanitizedWord) => {
 
 // the SerpAPI version
 app.get('/images', async (req, res) => {
-
-  let word = req.query.word
-  word = sanitizeSearch(word)
+  let word = req.query.word;
+  word = sanitizeSearch(word);
+  const limit = parseInt(req.query.limit) || 2;
 
   const config = {
     method: 'get',
     url: `https://serpapi.com/search?engine=google&q=${word}&tbm=isch&ijn=0&api_key=${process.env.API_KEY}`,
     encoding: 'utf-8'
-  }
+  };
 
-  let searchData = await axios(config)
-  .then(function (res) {
-    return res.data
-  })
-  .catch(function (error) {
-    // handle error
+  try {
+    const response = await axios(config);
+    // Only return the images we need (default 2) instead of 100+
+    const images = response.data.images_results?.slice(0, limit) || [];
+    res.json({ images_results: images });
+  } catch (error) {
     console.log(error);
-  })
-
-  res.json(searchData)
+    res.status(500).json({ error: 'Failed to fetch images' });
+  }
 })
 
 // required for proper deployment to Heroku, along with adding the heroku-postbuild that goes into client, runs npm install and npm build, and adding config keys in Heroku project settings
