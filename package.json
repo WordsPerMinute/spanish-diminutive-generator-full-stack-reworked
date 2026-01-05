@@ -8,7 +8,7 @@
   "description": "",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "npm install && cd front-end-react && npm install && npm run build",
+    "heroku-postbuild": "git submodule update --init --recursive && cd front-end-react && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
